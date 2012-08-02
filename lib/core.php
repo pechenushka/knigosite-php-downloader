@@ -62,14 +62,16 @@ class Core {
         $pathInfo = pathinfo($url);
         $filepath = $this->pathTo . '/' . $fileTitle . "." . $pathInfo['extension'];
         
-        Console::WriteLine("Скачиваю $url в $filepath");
+        //Console::WriteLine("Скачиваю $url в $filepath");
+        Console::WriteLine("Start downloading $url in $filepath");
 
         Downloader::download($url, $filepath);
         
         if ( $pathInfo['extension'] == 'zip' ) {
             $dirToExtract = $this->pathTo . '/' . $fileTitle;
 
-            Console::WriteLine("Распаковываю $filepath в $dirToExtract");
+            //Console::WriteLine("Распаковываю $filepath в $dirToExtract");
+            Console::WriteLine("Unzip $filepath in $dirToExtract");
 
             $this->unzip($filepath, $dirToExtract);
             
@@ -85,6 +87,8 @@ class Core {
     public function downloadBooks($urlToParse) {
         $links = Parser::getLinks($urlToParse);
         
+        Console::WriteLine("Books to be downloaded: " . count($links));
+
         foreach($links as $url => $title) {
             if ( $this->isWindows() ) {
                 $title = iconv('utf-8', 'cp1251', $title);
