@@ -71,10 +71,7 @@ class Core {
 
             Console::WriteLine("Распаковываю $filepath в $dirToExtract");
 
-            $zip = new ZipArchive();
-            $zip->open($filepath);
-            $zip->extractTo($dirToExtract);
-            $zip->close();
+            $this->unzip($filepath, $dirToExtract);
             
             $archivesDir = substr($dirToExtract, 0, stripos($dirToExtract, "/")) . "/archives/";
             
@@ -118,5 +115,12 @@ class Core {
 
     public function isWindows() {
         return $this->_isWindows;
+    }
+
+    public function unzip($from, $to) {
+        $zip = new ZipArchive();
+        $zip->open($from);
+        $zip->extractTo($to);
+        $zip->close();
     }
 }
