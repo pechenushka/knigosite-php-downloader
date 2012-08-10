@@ -17,11 +17,6 @@ $options = $core->getOptions($argv);
 
 Console::WriteLine("Start");
 
-/*
- * TODO: Добавить опции:
- * - Выбор формата
- */
-
 if ( ! count($options) ||  $core->isOptionExists('help') ) {
     Console::WriteLine($messages['help']);
     exit(0);

@@ -42,7 +42,7 @@ class Core {
              : "./";
          
         if ( ! is_dir($this->pathTo) ) {
-            mkdir($this->pathTo, 0777, true);
+            @mkdir($this->pathTo, 0777, true);
         }
         
         return $options;
