@@ -3,6 +3,10 @@ require_once "phpQuery/phpQuery.php";
 
 class Parser {
 
+    public static $availableExtensions = array(
+        "html", "fb2", "txt", "rtf"
+    );
+
     public static function parsePages($html) {
         $document = phpQuery::newDocument($html);
         $aPage = $document->find("a.page");
@@ -15,11 +19,11 @@ class Parser {
             $a = $document->find("a.book_t");
             $links[] = $a;
         }
-//var_dump($links);
+
         return $links;
     }
 
-    public static function getLinks($url) {
+    public static function getLinks($url, $ext = null) {
         $urlContent = file_get_contents($url);
         $document = phpQuery::newDocument($urlContent);
         
@@ -54,9 +58,17 @@ class Parser {
                 $bookDocument = phpQuery::newDocument($result);
                 $bookLinks = $bookDocument->find(".book_formats a");
                 
+                if ( ! is_null($ext) ) {
+                    if ( ! in_array($ext, Parser::$availableExtensions) ) {
+                        throw new Exception("Format " . $ext . " is not available");
+                    }
+                }
+
+                $ext or $ext = "fb2";
+                
                 foreach($bookLinks as $bookLink) {
                     switch(pq($bookLink)->text()) {
-                        case ".fb2":
+                        case "." . $ext:
                             $links[pq($bookLink)->attr('href')] = pq($link)->attr('title');
                             break;
                     }

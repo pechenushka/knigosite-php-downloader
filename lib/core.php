@@ -85,7 +85,20 @@ class Core {
     }
     
     public function downloadBooks($urlToParse) {
-        $links = Parser::getLinks($urlToParse);
+        /*
+         * Парсим ссылки на книги
+         */
+        try {
+            $links = Parser::getLinks(
+                $urlToParse,
+                ($this->isOptionExists("e") or $this->isOptionExists("extension"))
+                    ? $this->getOptionValue("e")
+                    : null
+            );
+        } catch (Exception $e) {
+            Console::WriteLine($e->getMessage());
+            exit(1);
+        }
         
         Console::WriteLine("Books to be downloaded: " . count($links));
 

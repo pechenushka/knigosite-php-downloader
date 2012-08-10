@@ -11,7 +11,8 @@ $messages = array(
     "help" => "$appName Copyright (C) 2012 Дамир Махмутов\n"
 );
 
-$core = new Core($config);
+global $config;
+$core = new Core($config->getConfig());
 $options = $core->getOptions($argv);
 
 Console::WriteLine("Start");
@@ -28,7 +29,7 @@ if ( ! count($options) ||  $core->isOptionExists('help') ) {
     /*
      * Поиск по автору
      */
-     $author = $core->getOptionValue('a');
+    $author = $core->getOptionValue('a');
     $core->downloadAuthorBooks($author);
 } elseif ( in_array('t', $options) || in_array('title', $options) ) {
     /*

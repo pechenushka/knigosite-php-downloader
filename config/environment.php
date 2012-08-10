@@ -1,6 +1,7 @@
 <?php
-namespace environment;
+require_once dirname(__FILE__) . "/../lib/config.php";
 
-$config = parse_ini_file("config.ini");
+$config = Config::instance();
+$config->setConfig(parse_ini_file("config.ini"));
 
 define("IS_WINDOWS", PHP_OS == "WINNT");
