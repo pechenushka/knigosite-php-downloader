@@ -3,7 +3,7 @@
 class Console {
     public static function Write($str) {
         if ( constant("IS_WINDOWS") ) {
-            //$str = iconv('utf-8', 'cp1251', $str);
+            $str = iconv('utf-8', 'cp866', $str);
         }
         echo $str;
     }
